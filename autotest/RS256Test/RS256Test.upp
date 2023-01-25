@@ -1,0 +1,10 @@
+uses
+	Core,
+	RSA;
+
+file
+	RS256Test.cpp;
+
+mainconfig
+	"" = "";
+
