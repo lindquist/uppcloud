@@ -14,16 +14,6 @@ namespace UppCloud {
 //
 // not written against 3.x at this time, but 1.1.1
 
-struct iBIGNUM
-{
-	BIGNUM* bn;
-
-	iBIGNUM() : bn(BN_new()) {}
-	~iBIGNUM() { BN_free(bn); }
-	operator BIGNUM*() const { return bn; }
-	operator bool() const { return bn != nullptr; }
-};
-
 struct iBIO
 {
 	BIO* bio;
@@ -35,33 +25,6 @@ struct iBIO
 	operator BIO*() const { return bio; }
 	operator bool() const { return bio != nullptr; }
 };
-
-struct iEVP_PKEY_CTX
-{
-   EVP_PKEY_CTX* ctx;
-
-   iEVP_PKEY_CTX(int id) {
-      ctx = EVP_PKEY_CTX_new_id(id, nullptr);
-      ASSERT(ctx != nullptr);
-   }
-   iEVP_PKEY_CTX(EVP_PKEY* pkey) {
-      ctx = EVP_PKEY_CTX_new(pkey, nullptr);
-      ASSERT(ctx != nullptr);
-   }
-   ~iEVP_PKEY_CTX() { EVP_PKEY_CTX_free(ctx); }
-   operator EVP_PKEY_CTX*() const { return ctx; }
-   operator bool() const { return ctx != nullptr; }
-};
-
-
-// INITIALIZE
-// ENGINE_load_builtin_engines();
-// ENGINE_register_all_complete
-// ENGINE_register_all_ciphers();
-// ENGINE_register_all_digests();
-// ENGINE_register_all_pkey_meths();
-// ENGINE_register_all_pkey_asn1_meths();
-
 
 //--------------------------------------------------------------------------
 
