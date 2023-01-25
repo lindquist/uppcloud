@@ -1,0 +1,8 @@
+uses
+	Core/SSL,
+	RSA;
+
+file
+	JWT.h,
+	JWT.cpp;
+
