@@ -1,5 +1,7 @@
 #include "EVP.h"
 
+using namespace Upp;
+
 namespace UppCloud {
 
 // ---------------------------------------------------------------------------

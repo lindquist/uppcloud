@@ -1,5 +1,7 @@
 #include "JWT.h"
 
+using namespace Upp;
+
 namespace UppCloud {
 
 JWT::JWT()

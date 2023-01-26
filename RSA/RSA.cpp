@@ -3,26 +3,28 @@
 // implemented according to openssl 1.1 manual:
 // https://www.openssl.org/docs/man1.1.1/man3/RSA_sign.html
 
+using namespace Upp;
+
 namespace UppCloud {
 
 // helpers
 
-struct Scoped_BIGNUM
+struct iBIGNUM
 {
 	BIGNUM* bn;
-	Scoped_BIGNUM() : bn(BN_new()) {}
-	~Scoped_BIGNUM() { if (bn) BN_free(bn); }
+	iBIGNUM() : bn(BN_new()) {}
+	~iBIGNUM() { if (bn) BN_free(bn); }
 	operator BIGNUM*() const { return bn; }
 	operator bool() const { return bn != nullptr; }
 };
 
-struct Scoped_BIO
+struct iBIO
 {
 	BIO* bio;
-	Scoped_BIO() : bio(BIO_new(BIO_s_mem())) {}
-	Scoped_BIO(const String& string)
+	iBIO() : bio(BIO_new(BIO_s_mem())) {}
+	iBIO(const String& string)
 		: bio(BIO_new_mem_buf((void *)~string, string.GetCount())) {};
-	~Scoped_BIO() { if (bio) BIO_free(bio); }
+	~iBIO() { if (bio) BIO_free(bio); }
 	operator BIO*() const { return bio; }
 	operator bool() const { return bio != nullptr; }
 };
@@ -39,7 +41,7 @@ bool RSAPrivateKey::SetKey(const String& pem_string)
 {
 	if (pem_string.IsEmpty())
 		return false;
-	Scoped_BIO bio(pem_string);
+	iBIO bio(pem_string);
 	if (bio) {
 		priv = PEM_read_bio_RSAPrivateKey(bio, NULL, NULL, NULL);
 		if (!priv) {
@@ -55,7 +57,7 @@ bool RSAPrivateKey::Generate(int bits, BN_ULONG e)
 		RSA_free(priv);
 		priv = nullptr;
 	}
-	Scoped_BIGNUM bne;
+	iBIGNUM bne;
 	if (!bne)
 		return false;
 	if (!BN_set_word(bne, e)) {
@@ -80,7 +82,7 @@ String RSAPrivateKey::GetKey() const
 	if (!priv)
 		return String::GetVoid();
 	String key = String::GetVoid();
-	Scoped_BIO bio;
+	iBIO bio;
 	if (bio) {
 		if (PEM_write_bio_RSAPrivateKey(bio, priv, NULL, NULL, 0, NULL, NULL)) {
 			char* ptr = nullptr;
@@ -132,7 +134,7 @@ bool RSAPublicKey::SetKey(const String& pem_string)
 {
 	if (pem_string.IsEmpty())
 		return false;
-	Scoped_BIO bio(pem_string);
+	iBIO bio(pem_string);
 	if (bio) {
 		pub = PEM_read_bio_RSAPublicKey(bio, NULL, NULL, NULL);
 		if (!pub) {
@@ -147,7 +149,7 @@ String RSAPublicKey::GetKey() const
 	if (!pub)
 		return String::GetVoid();
 	String key = String::GetVoid();
-	Scoped_BIO bio;
+	iBIO bio;
 	if (bio) {
 		if (PEM_write_bio_RSAPublicKey(bio, pub)) {
 			char* ptr = nullptr;

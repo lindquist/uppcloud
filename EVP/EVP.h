@@ -1,14 +1,11 @@
 #ifndef _EVP_EVP_h
 #define _EVP_EVP_h
 
-#include <Core/Core.h>
 #include <Core/SSL/SSL.h>
 
 namespace UppCloud {
 
-using namespace Upp;
-
-struct EVPKey : Moveable<EVPKey>
+struct EVPKey : Upp::Moveable<EVPKey>
 {
 	// formerly-NID ids (not entirely suggested by very convenient)
 	enum {
@@ -43,20 +40,20 @@ struct EVPKey : Moveable<EVPKey>
 	EVPKey();
 	~EVPKey();
 
-   bool LoadPrivate(const String& string_key);
-	bool LoadPublic(const String& string_key);
-   String SavePrivatePKCS8() const;
-	String SavePrivate() const;
-	String SavePublic() const;
+   bool LoadPrivate(const Upp::String& string_key);
+	bool LoadPublic(const Upp::String& string_key);
+   Upp::String SavePrivatePKCS8() const;
+	Upp::String SavePrivate() const;
+	Upp::String SavePublic() const;
    bool Generate(int type);
 	int GetId() const;
 
-   String Sign(const String& message) const;
-   bool Verify(const String& message, const String& signature) const;
+   Upp::String Sign(const Upp::String& message) const;
+   bool Verify(const Upp::String& message, const Upp::String& signature) const;
 
 };
 
-struct EVPCipher : Moveable<EVPCipher>
+struct EVPCipher : Upp::Moveable<EVPCipher>
 {
 	EVP_CIPHER_CTX *ctx;
 
@@ -65,22 +62,22 @@ struct EVPCipher : Moveable<EVPCipher>
 
 	void Reset();
 
-	bool BeginEncrypt(const EVP_CIPHER* cipher, const String& key, const String& iv);
-	bool DoEncrypt(const String& data);
-	String FinishEncrypt();
+	bool BeginEncrypt(const EVP_CIPHER* cipher, const Upp::String& key, const Upp::String& iv);
+	bool DoEncrypt(const Upp::String& data);
+	Upp::String FinishEncrypt();
 	
-	bool BeginDecrypt(const EVP_CIPHER* cipher, const String& key, const String& iv);
-	bool DoDecrypt(const String& data);
-	String FinishDecrypt();
+	bool BeginDecrypt(const EVP_CIPHER* cipher, const Upp::String& key, const Upp::String& iv);
+	bool DoDecrypt(const Upp::String& data);
+	Upp::String FinishDecrypt();
 	
-	String Encrypt(const EVP_CIPHER* cipher, const String& key, const String& iv, const String& message);
-	String Decrypt(const EVP_CIPHER* cipher, const String& key, const String& iv, const String& message);
+	Upp::String Encrypt(const EVP_CIPHER* cipher, const Upp::String& key, const Upp::String& iv, const Upp::String& message);
+	Upp::String Decrypt(const EVP_CIPHER* cipher, const Upp::String& key, const Upp::String& iv, const Upp::String& message);
 	
 	int GetBlockSize() const;
 	static int GetCipherBlockSize(const EVP_CIPHER* cipher);
 
 private:
-	String buffer;
+	Upp::String buffer;
 };
 
 } // UppCloud
