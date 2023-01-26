@@ -1,4 +1,4 @@
-Copyright (c) 2023, Tomas Lindquist
+Copyright (c) 2023, Tomas Lindquist (tomas.l.olsen@gmail.com)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted
