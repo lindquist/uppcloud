@@ -1,0 +1,10 @@
+uses
+	Core,
+	EVP;
+
+file
+	EVPEncrypt.cpp;
+
+mainconfig
+	"" = "";
+

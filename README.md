@@ -13,3 +13,9 @@ JWT
 ---
 - Simple class for creating (signing) and parsing and verifying the signature of JWT's.
 - Only supports alg=RS256 right now
+
+EVP
+---
+OpenSSL High-level cryptographic functions
+- sign/verify
+- encrypt/decrypt

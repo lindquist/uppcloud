@@ -3,6 +3,7 @@ uses
 	Core/SSL;
 
 file
+	EVP.h,
 	EVP.cpp,
-	EVP.h;
+	Cipher.cpp;
 

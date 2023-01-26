@@ -56,6 +56,33 @@ struct EVPKey : Moveable<EVPKey>
 
 };
 
+struct EVPCipher : Moveable<EVPCipher>
+{
+	EVP_CIPHER_CTX *ctx;
+
+	EVPCipher();
+	~EVPCipher();
+
+	void Reset();
+
+	bool BeginEncrypt(const EVP_CIPHER* cipher, const String& key, const String& iv);
+	bool DoEncrypt(const String& data);
+	String FinishEncrypt();
+	
+	bool BeginDecrypt(const EVP_CIPHER* cipher, const String& key, const String& iv);
+	bool DoDecrypt(const String& data);
+	String FinishDecrypt();
+	
+	String Encrypt(const EVP_CIPHER* cipher, const String& key, const String& iv, const String& message);
+	String Decrypt(const EVP_CIPHER* cipher, const String& key, const String& iv, const String& message);
+	
+	int GetBlockSize() const;
+	static int GetCipherBlockSize(const EVP_CIPHER* cipher);
+
+private:
+	String buffer;
+};
+
 } // UppCloud
 
 #endif
