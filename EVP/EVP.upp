@@ -4,6 +4,7 @@ uses
 
 file
 	EVP.h,
-	EVP.cpp,
+	Key.cpp,
+	Digest.cpp,
 	Cipher.cpp;
 

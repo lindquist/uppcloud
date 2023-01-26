@@ -3,7 +3,7 @@ uses
 	EVP;
 
 file
-	RSA2Test1.cpp;
+	EVPTest.cpp;
 
 mainconfig
 	"" = "";

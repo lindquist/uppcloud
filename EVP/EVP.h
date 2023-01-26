@@ -5,6 +5,24 @@
 
 namespace UppCloud {
 
+struct EVPDigest : Upp::Moveable<EVPDigest>
+{
+	const EVP_MD *md;
+	EVP_MD_CTX *mdctx;
+
+	EVPDigest();
+	EVPDigest(const EVP_MD *md);
+	~EVPDigest();
+
+	bool SetDigest(const EVP_MD *md);
+	
+	Upp::String Digest(const Upp::String& data) const;
+
+	bool Init() const;
+	bool Update(const Upp::String& data) const;
+	Upp::String Final() const;
+};
+
 struct EVPKey : Upp::Moveable<EVPKey>
 {
 	// formerly-NID ids (not entirely suggested by very convenient)
@@ -48,9 +66,25 @@ struct EVPKey : Upp::Moveable<EVPKey>
    bool Generate(int type);
 	int GetId() const;
 
+	   bool InitSign() const;
    Upp::String Sign(const Upp::String& message) const;
-   bool Verify(const Upp::String& message, const Upp::String& signature) const;
 
+   bool InitVerify() const;
+   bool Verify(const Upp::String& message, const Upp::String& signature) const;
+   
+   // below calls things from:
+   // https://www.openssl.org/docs/manmaster/man3/EVP_PKEY_CTX_set_signature_md.html
+   
+   bool SetSignatureDigest(const EVP_MD *md) const; // eg. EVP_sha256()
+   
+   bool SetRsaPaddingMode(int padMode) const; // eg. RSA_PKCS1_PADDING etc
+   int GetRsaPaddingMode() const;
+   
+   bool SetRsaPssSaltLen(int saltlen) const;
+   bool SetRsaKeyGenBits(int mbits) const;
+   bool SetRsaKeyGenPubExp(BN_ULONG e) const; // eg. RSA_F4 (65537)
+   //EVP_PKEY_CTX_set1_rsa_keygen_pubexp
+   
 };
 
 struct EVPCipher : Upp::Moveable<EVPCipher>
