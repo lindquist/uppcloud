@@ -8,18 +8,38 @@ A collection of U++ packages that might be useful for interaction with cloud ser
 
 RSA
 ---
+The RSA package provides a simple U++ class for handling traditional RSA keys.
+
+Dependencies:
+- Core/SSL
+
+Features:
 - Supports traditional format RSA keys with RS256 signature signing and verification.
-  - Uses RSAPrivateKey and RSAPublicKey functions:
-    - https://www.openssl.org/docs/man1.1.1/man3/PEM_read_bio_RSAPrivateKey.html
-- Loading and saving PEM files is supported.
+- Loading and saving PEM files.
+- Uses RSAPrivateKey and RSAPublicKey functions:
+  - https://www.openssl.org/docs/man1.1.1/man3/PEM_read_bio_RSAPrivateKey.html
+
 
 JWT
 ---
-- Simple class for creating (signing) and parsing and verifying the signature of JWT's.
-- Only supports alg=RS256 right now
+The JWT package provides a simple U++ class for handling JWT tokens.
+
+Dependencies:
+- RSA
+
+Features:
+- Simple class for creating (signing) and parsing and verifying JWT tokens.
+- Only supports `alg:"RS256"` right now.
+
 
 EVP
 ---
+The EVP package provides a simple U++ interface to OpenSSL EVP (Envelope - High-level cryptographic functions).
+
+Dependencies:
+- Core/SSL
+
+Features:
 - EVP - High-level cryptographic functions
   - https://www.openssl.org/docs/man1.0.2/man3/evp.html
 - Provides the following features of OpenSSL:
