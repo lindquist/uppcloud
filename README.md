@@ -2,6 +2,8 @@ U++ Cloud utilities
 ===
 A collection of U++ packages that might be useful for interaction with cloud services.
 
+*In early development.*
+
 [U++](https://github.com/ultimatepp/ultimatepp)
 
 RSA
